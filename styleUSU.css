@@ -1,18 +1,47 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.game-board{
+.game-board {
     width: 90%;
     height: 800px;
     border: 2px solid #333;
     margin: 0 auto;
     background-image: url('Imagens8bits/Fundomontanhas8bits.jpg');
-    background-size: cover; /* Ajusta a imagem de fundo para cobrir toda a tela */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    background-position: center; /* Centraliza a imagem */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
     z-index: 1;
 }
 
+#airplane {
+    position: absolute;
+    width: 150px; /* Ajuste conforme necessário */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Coloca o avião acima do fundo */
+}
+
+#character-head {
+    position: absolute;
+    width: 50px; /* Ajuste conforme necessário */
+    top: 20px; /* Ajuste conforme necessário */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3; /* Coloca a cabeça do personagem acima do avião */
+}
+
+.user-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+    z-index: 4; /* Coloca a informação do usuário acima de tudo */
+}

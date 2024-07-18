@@ -121,4 +121,3 @@ console.log(usuario, "SESSION AQUI");
 //Objeto do usuario
 
 const protag= new Object();
-
