@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Inicial</title>
+    <link rel="stylesheet" href="css/styleMenu.css" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1>Menu Inicial</h1>
+        <div class="menu-options">
+            <button class="menu-option" data-target="index.html">Iniciar</button>
+            <button id="themeButton" class="menu-option" data-target="themeSelection.html">Escolher Tema</button>
+            <button class="menu-option" data-target="about.html">Loja</button>
+            <!-- Adicione mais opções conforme necessário -->
+        </div>
+    </div>
+    <script src="js/scriptPage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchMenu();
+        });
+    </script>
+</body>
+</html>

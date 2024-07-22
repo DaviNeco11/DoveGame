@@ -75,21 +75,20 @@
 
 .theme3 #equipament-container {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 83.5%;
+    left: 10%;
     transform: translate(-50%, -50%);
     z-index: 2; /* Coloca o equipamento acima do fundo */
     cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
     width: 150px; /* Define a largura do contêiner do equipamento */
     height: auto; /* Mantém a proporção da altura */
-    animation: moveUpDown 2s ease-in-out infinite;
 }
 
 .theme3 #character-head {
     position: absolute;
     width: 100px; /* Ajuste conforme necessário */
-    bottom: 6px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
-    left: 62%;
+    bottom: 55px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
+    left: 55%;
     transform: translateX(-50%);
     z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
 }
@@ -116,21 +115,20 @@
 
 .theme5 #equipament-container {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 84%;
+    left: 10%;
     transform: translate(-50%, -50%);
     z-index: 2; /* Coloca o equipamento acima do fundo */
     cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
     width: 150px; /* Define a largura do contêiner do equipamento */
     height: auto; /* Mantém a proporção da altura */
-    animation: moveUpDown 3s ease-in-out infinite;
 }
 
 .theme5 #character-head {
     position: absolute;
-    width: 100px; /* Ajuste conforme necessário */
+    width: 115px; /* Ajuste conforme necessário */
     bottom: 6px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
-    left: 62%;
+    left: 53%;
     transform: translateX(-50%);
     z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
 }

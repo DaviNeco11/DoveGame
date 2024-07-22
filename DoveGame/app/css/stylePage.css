@@ -4,7 +4,7 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-image: url('Imagens8bits/Fundopadrao.png');
+    background-image: url('../Imagens8bits/Fundopadrao.png');
     background-size: cover; /* Ajusta a imagem de fundo para cobrir toda a tela */
     background-repeat: no-repeat; /* Evita que a imagem se repita */
     background-position: center; /* Centraliza a imagem */
@@ -32,56 +32,15 @@ h1 {
 }
 
 form input, form select {
+    font-family: 'Courier New', Courier, monospace; 
     width: 50%; 
     padding: 8px; 
     margin-top: 5px; 
     margin-bottom: 10px;
     box-sizing: border-box; 
     cursor: pointer; 
+    letter-spacing: 2px; /* Espaçamento entre letras para dar um efeito mais "pixelado" */
 }
-
 form input:hover {
     background-color: #7aeaa1; 
-}
-
-/* Estilos adicionais para a página de seleção de temas */
-.theme-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.theme-option {
-    border: 2px solid #333;
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.3s, border-color 0.3s;
-    text-align: center; /* Centraliza o texto dentro do contêiner */
-    max-width: 150px; /* Define a largura máxima do contêiner */
-}
-
-.theme-option img {
-    width: 80px; /* Ajuste conforme necessário */
-    height: 80px; /* Define a altura fixa da imagem */
-    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
-    display: block;
-    margin: 0 auto;
-}
-
-.theme-option p {
-    margin: 10px 0 0;
-    font-size: 14px; /* Ajuste conforme necessário */
-}
-
-.theme-option.selected {
-    border-color: #007BFF;
-    transform: scale(1.05);
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
 }

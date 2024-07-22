@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM fully loaded and parsed');
 
     // Log do caminho atual da página
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let characterHeadImage = '';
             let themeClass = '';
 
-            switch(selectedTheme) {
+            switch (selectedTheme) {
                 case 'tema1':
                     backgroundImage = 'Imagens8bits/Asfalto.jpg';
                     equipamentImage = 'Imagens8bits/scooter-7827947_1280.png';
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'tema3':
                     backgroundImage = 'Imagens8bits/Asfalto.jpg';
                     equipamentImage = 'Imagens8bits/pixil-frame-0.png';
-                    characterHeadImage = 'Imagens8bits/CabecaChefe2.png';
+                    characterHeadImage = 'Imagens8bits/ChefeInteiro-removebg-preview.png';
                     themeClass = 'theme3';
                     break;
                 case 'tema4':
@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
             characterHead.alt = 'Cabeça do personagem'; // Adiciona um texto alternativo para acessibilidade
             equipamentContainer.appendChild(characterHead);
 
-            // Adiciona evento de clique para mover o equipamento para a esquerda
-            equipamentContainer.addEventListener('click', function() {
-                const currentLeft = equipamentContainer.style.left ? parseInt(equipamentContainer.style.left) : 50;
-                equipamentContainer.style.left = (currentLeft - 10) + '%'; // Move o equipamento 10% para a esquerda
+            // Adiciona evento de clique para mover o equipamento para a direita
+            equipamentContainer.addEventListener('click', function () {
+                const currentLeft = equipamentContainer.style.left ? parseInt(equipamentContainer.style.left) : 10;
+                equipamentContainer.style.left = (currentLeft + 10) + '%'; // Move o equipamento 10% para a direita
             });
 
             // Adiciona log para verificar se a imagem está sendo carregada
