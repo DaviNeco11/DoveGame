@@ -50,6 +50,27 @@ function startProcess() {
 //---------------------Menu de opções-------------------------------------
 
 function fetchMenu() {
+
+    function navigateTo(page) {
+        console.log('Navigating to:', page); // Log para verificar a página de destino
+        window.location.href = page;
+    }
+
+    const menuOptions = document.querySelectorAll('.menu-option');
+    console.log('Menu Options:', menuOptions); // Log para verificar as opções do menu
+
+    menuOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const targetPage = this.getAttribute('data-target');
+            console.log('Target Page:', targetPage); // Log para verificar a página de destino
+            navigateTo(targetPage);
+        });
+    });
+}
+
+//-------------Configurações---------------------------------------------
+
+function fetchConfig() {
     console.log('User Role:', userRole); // Adicione este log para verificar o valor
 
     // Verifica se o usuário é admin e exibe/oculta o botão "Escolher Tema"
@@ -78,7 +99,6 @@ function fetchMenu() {
         });
     });
 }
-
 
 //--------------Função de escolha de TEMA--------------------------------
 

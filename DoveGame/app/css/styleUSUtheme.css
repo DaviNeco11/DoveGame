@@ -26,7 +26,7 @@ h1 {
     margin: 20px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     width: 80%; 
-    max-height: 500px;
+    max-height: 800px;
     max-width: 600px; 
     text-align: center; 
 }
@@ -87,12 +87,13 @@ button {
 }
 
 .back-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    align-self: flex-start;
+    align-items: start;
+    top: 20px; /* Ajuste a distância do topo conforme necessário */
+    left: 20px; /* Ajuste a distância da esquerda conforme necessário */
     background-color: #6ea6ff;
     color: rgb(0, 0, 0);
-    border-color:  rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     padding: 5px 8px;
     cursor: pointer;
     font-size: 14px;
