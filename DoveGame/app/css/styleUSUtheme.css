@@ -88,7 +88,6 @@ button {
 
 .back-button {
     align-self: flex-start;
-    align-items: start;
     top: 20px; /* Ajuste a distância do topo conforme necessário */
     left: 20px; /* Ajuste a distância da esquerda conforme necessário */
     background-color: #6ea6ff;
