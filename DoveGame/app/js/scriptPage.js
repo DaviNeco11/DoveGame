@@ -1,6 +1,7 @@
 var emails = [];
 var userRole = 'admin'; // Ajuste conforme necessário
-
+var selectedTheme = null;
+var optionId = null;
 // Função chamada ao clicar no botão
 function startProcess() {
     // Pega somente o email
@@ -56,6 +57,12 @@ function fetchMenu() {
         window.location.href = page;
     }
 
+    function showMessage(message, callback) {
+        if (confirm(message)) {
+            callback();
+        }
+    }
+
     const menuOptions = document.querySelectorAll('.menu-option');
     console.log('Menu Options:', menuOptions); // Log para verificar as opções do menu
 
@@ -63,10 +70,46 @@ function fetchMenu() {
         option.addEventListener('click', function() {
             const targetPage = this.getAttribute('data-target');
             console.log('Target Page:', targetPage); // Log para verificar a página de destino
-            navigateTo(targetPage);
+            
+            if (targetPage === 'index.html') {
+                const optionId = sessionStorage.getItem('optionId');
+                const selectedTheme = sessionStorage.getItem('selectedTheme');
+                const isAdmin = userRole === 'admin'; // Supondo que isso esteja armazenado no sessionStorage
+
+                console.log('optionId:', optionId);
+                console.log('selectedTheme:', selectedTheme);
+                console.log('isAdmin:', isAdmin);
+
+                if (!optionId && !selectedTheme) {
+                    // Caso 1: optionId e selectedTheme estão nulos
+                    if (isAdmin) {
+                        console.log('selectedTheme is null and user is admin. Asking to select theme.');
+                        showMessage('Por favor, selecione um tema.', function() {
+                            navigateTo('themeSelection.html');
+                        });
+                    } else {
+                        console.log('selectedTheme is null and user is not admin. Asking to wait for admin.');
+                        alert('A sessão ainda não foi criada. Por favor, aguarde o admin.');
+                    }
+                } else if (!optionId) {
+                    // Caso 2: optionId está nulo
+                    console.log('optionId is null. Redirecting to index.html.');
+                    navigateTo('index.html');
+                }else {
+                    // Caso 4: optionId e selectedTheme não estão nulos
+                    console.log('Both optionId and selectedTheme are not null. Redirecting to usupag.html.');
+                    navigateTo('usupag.html');
+                }
+            } else {
+                navigateTo(targetPage);
+            }
         });
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchMenu();
+});
 
 //-------------Configurações---------------------------------------------
 
