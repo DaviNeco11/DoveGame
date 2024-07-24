@@ -1,7 +1,6 @@
 var emails = [];
 var userRole = 'admin'; // Ajuste conforme necessário
-var selectedTheme = null;
-var optionId = null;
+
 // Função chamada ao clicar no botão
 function startProcess() {
     // Pega somente o email
@@ -20,38 +19,38 @@ function startProcess() {
                     displayElement.textContent = email;
                     emails.push(email);
                 }
+
+                // Depois de pegar os emails, apagar os forms
+                var config2 = {
+                    appName: "DoveGame",
+                    reportName: "FirstForm_Report",
+                    criteria: "(RecebeEmail != \"Invalid\")"
+                };
+
+                ZOHO.CREATOR.API.deleteRecord(config2).then(function (response) {
+                    teste();
+                    redirectToMenu();
+                });
             });
         });
+}
 
-    // Apaga o forms
-    ZOHO.CREATOR.init()
-        .then(function (data) {
-            var config2 = {
-                appName: "DoveGame",
-                reportName: "FirstForm_Report",
-                criteria: "(RecebeEmail != \"Invalid\")"
-            };
+function teste() {
+    sessionStorage.setItem('usuario', emails[0]);
+    sessionStorage.setItem('userRole', userRole); // Armazena a função do usuário no sessionStorage
+}
 
-            ZOHO.CREATOR.API.deleteRecord(config2).then(function (response) {
-                teste();
-            });
-        });
-
-    // Função para o session
-    function teste() {
-        sessionStorage.setItem('usuario', emails[0]);
-        sessionStorage.setItem('userRole', userRole); // Armazena a função do usuário no sessionStorage
-        return 1;
-    }
-
-
-        window.location.href = 'menu.html';
+function redirectToMenu() {
+    window.location.href = 'menu.html';
 }
 
 //---------------------Menu de opções-------------------------------------
 
-function fetchMenu() {
+document.addEventListener('DOMContentLoaded', function() {
+    fetchMenu();
+});
 
+function fetchMenu() {
     function navigateTo(page) {
         console.log('Navigating to:', page); // Log para verificar a página de destino
         window.location.href = page;
@@ -63,23 +62,29 @@ function fetchMenu() {
         }
     }
 
-    const menuOptions = document.querySelectorAll('.menu-option');
-    console.log('Menu Options:', menuOptions); // Log para verificar as opções do menu
+    const startButton = document.getElementById('startButton');
+    const configButton = document.getElementById('configButton');
+    const optionId = sessionStorage.getItem('selectedOptionId'); // Certifique-se de que está pegando o ID correto
+    const selectedTheme = sessionStorage.getItem('selectedTheme');
 
-    menuOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            const targetPage = this.getAttribute('data-target');
-            console.log('Target Page:', targetPage); // Log para verificar a página de destino
+    // Garantir que userRole não seja null e normalizar para comparação
+    userRole = userRole ? userRole.trim().toLowerCase() : '';
+    const isAdmin = userRole === 'admin';
+
+    console.log('optionId:', optionId);
+    console.log('selectedTheme:', selectedTheme);
+    console.log('userRole:', userRole);
+    console.log('isAdmin:', isAdmin);
+    console.log('Start Button:', startButton); // Log para verificar o botão "Iniciar"
+    console.log('Config Button:', configButton); // Log para verificar o botão "Configurações"
+
+    // Verifique se os botões existem antes de adicionar os event listeners
+    if (startButton ) {
+        startButton.addEventListener('click', function() {
+            const targetPagemenu = this.getAttribute('data-target');
+            console.log('Target Page:', targetPagemenu); // Log para verificar a página de destino
             
-            if (targetPage === 'index.html') {
-                const optionId = sessionStorage.getItem('optionId');
-                const selectedTheme = sessionStorage.getItem('selectedTheme');
-                const isAdmin = userRole === 'admin'; // Supondo que isso esteja armazenado no sessionStorage
-
-                console.log('optionId:', optionId);
-                console.log('selectedTheme:', selectedTheme);
-                console.log('isAdmin:', isAdmin);
-
+            if (targetPagemenu === 'index.html') {
                 if (!optionId && !selectedTheme) {
                     // Caso 1: optionId e selectedTheme estão nulos
                     if (isAdmin) {
@@ -89,27 +94,50 @@ function fetchMenu() {
                         });
                     } else {
                         console.log('selectedTheme is null and user is not admin. Asking to wait for admin.');
-                        alert('A sessão ainda não foi criada. Por favor, aguarde o admin.');
+                        showMessage('A sessão ainda não foi criada. Por favor, aguarde o admin.', function() {
+                            navigateTo('menu.html');
+                        });
                     }
                 } else if (!optionId) {
-                    // Caso 2: optionId está nulo
-                    console.log('optionId is null. Redirecting to index.html.');
-                    navigateTo('index.html');
-                }else {
+                    console.log('selectedTheme is null and user is not admin. Asking to wait for admin.');
+                        showMessage('Você ainda não escolheu seu personagem.', function() {
+                            navigateTo('index.html');
+                        });
+                } else if (!selectedTheme) {
+                    if (isAdmin) {
+                        console.log('selectedTheme is null and user is admin. Asking to select theme.');
+                        showMessage('Por favor, selecione um tema.', function() {
+                            navigateTo('themeSelection.html');
+                        });
+                    } else {
+                        console.log('selectedTheme is null and user is not admin. Asking to wait for admin.');
+                        showMessage('A sessão ainda não foi criada. Por favor, aguarde o admin.', function() {
+                            navigateTo('menu.html');
+                        });
+                    }
+                } else {
                     // Caso 4: optionId e selectedTheme não estão nulos
                     console.log('Both optionId and selectedTheme are not null. Redirecting to usupag.html.');
                     navigateTo('usupag.html');
                 }
             } else {
-                navigateTo(targetPage);
+                console.log('Invalid target page for startButton:', targetPagemenu);
             }
         });
-    });
-}
+    } else {
+        console.error('Start Button not found!');
+    }
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchMenu();
-});
+    if (configButton) {
+        configButton.addEventListener('click', function() {
+            const targetPageconfig = this.getAttribute('data-target');
+            console.log('Navigating to config page:', targetPageconfig);
+            navigateTo(targetPageconfig);
+        });
+    } else {
+        console.error('Config Button not found!');
+    }
+}
 
 //-------------Configurações---------------------------------------------
 
@@ -126,21 +154,17 @@ function fetchConfig() {
         }
     }
 
-    function navigateTo(page) {
-        console.log('Navigating to:', page); // Log para verificar a página de destino
-        window.location.href = page;
-    }
-
     const menuOptions = document.querySelectorAll('.menu-option');
     console.log('Menu Options:', menuOptions); // Log para verificar as opções do menu
 
     menuOptions.forEach(option => {
         option.addEventListener('click', function() {
             const targetPage = this.getAttribute('data-target');
-            console.log('Target Page:', targetPage); // Log para verificar a página de destino
-            navigateTo(targetPage);
+            console.log('Navigating to config page:', targetPage);
+            window.location.href = targetPage; // Corrige a navegação
         });
     });
+
 }
 
 //--------------Função de escolha de TEMA--------------------------------
@@ -178,9 +202,8 @@ function fetchThemeData() {
 
 document.addEventListener('DOMContentLoaded', fetchThemeData);
 
-//--------------Pega o quadro partitipante-------------------------------
+//--------------Pega o quadro participante-------------------------------
 var nomes = [];
-var emails = [];
 var IdAvatarArr = [];
 var PontuacaoArr = [];
 var protag = {};
@@ -222,13 +245,13 @@ function fetchParticipantData() {
             });
         });
 }
-//--------------Menu de selecao-------------------------------
+
+//--------------Menu de seleção-------------------------------
 function handleOptionClick(optionId) {
+    // Armazena o ID da opção selecionada no sessionStorage
     sessionStorage.setItem('selectedOptionId', optionId);
     alert("Você selecionou a opção com ID: " + optionId);
-
-    // Redireciona para nova_pagina.html
-    window.location.href = "usupag.html";
+    window.location.href = 'config.html';
 }
 
 function initPage() {
@@ -242,6 +265,15 @@ function initPage() {
     // Objeto do usuario
     const protag = new Object();
 }
+//-------------------
+
+var vetor = [90, 30, 40, 2, 15];
+var nomes = ["Bora bill", "Casca de bala", "Amostradinho", "Cleitom Rasta", "Receba Graças a deus"];
+// Referências aos elementos do DOM
+const imagesContainer = document.getElementById("imagesContainer"); 
+const generateImagesButton = document.getElementById("generateImages"); 
+const moverButton = document.getElementById("mover"); 
+const infoContainer = document.getElementById("infoContainer");
 
 //----------------THEME Selection-------------------------
 function themePage() {
@@ -306,46 +338,34 @@ function themePage() {
             gameBoard.style.backgroundImage = `url(${backgroundImage})`;
             gameBoard.classList.add(themeClass);
 
-            // Adiciona o container do equipamento
-            const equipamentContainer = document.createElement('div');
-            equipamentContainer.id = 'equipament-container';
-            equipamentContainer.style.position = 'relative'; // Adiciona posicionamento relativo
-            equipamentContainer.style.left = '10%'; // Define a posição inicial
-            gameBoard.appendChild(equipamentContainer);
+            for (let i = 0; i < vetor.length; i++) {
+                setTimeout(() => {
+                    // Adiciona o container do equipamento
+                    const equipamentContainer = document.createElement('div');
+                    equipamentContainer.id = 'equipament-container';
+                    equipamentContainer.style.position = 'relative'; // Adiciona posicionamento relativo
+                    equipamentContainer.style.left = '10%'; // Define a posição inicial
+                    gameBoard.appendChild(equipamentContainer);
 
-            // Adiciona a imagem do equipamento
-            const equipament = document.createElement('img');
-            equipament.id = 'equipament';
-            equipament.src = equipamentImage;
-            equipament.alt = 'Equipamento'; // Adiciona um texto alternativo para acessibilidade
-            equipamentContainer.appendChild(equipament);
+                    // Adiciona a imagem do equipamento
+                    const equipament = document.createElement('img');
+                    equipament.id = 'equipament';
+                    equipament.src = equipamentImage;
+                    equipament.alt = 'Equipamento'; // Adiciona um texto alternativo para acessibilidade
+                    equipamentContainer.appendChild(equipament);
 
-            // Adiciona a cabeça do personagem sobre o equipamento
-            const characterHead = document.createElement('img');
-            characterHead.id = 'character-head';
-            characterHead.src = characterHeadImage;
-            characterHead.alt = 'Cabeça do personagem'; // Adiciona um texto alternativo para acessibilidade
-            equipamentContainer.appendChild(characterHead);
+                    // Adiciona a cabeça do personagem sobre o equipamento
+                    const characterHead = document.createElement('img');
+                    characterHead.id = 'character-head';
+                    characterHead.src = characterHeadImage;
+                    characterHead.alt = 'Cabeça do personagem'; // Adiciona um texto alternativo para acessibilidade
+                    equipamentContainer.appendChild(characterHead);
 
-            // Adiciona evento de clique para mover o equipamento para a direita
-            equipamentContainer.addEventListener('click', function () {
-                const currentLeft = equipamentContainer.style.left ? parseInt(equipamentContainer.style.left) : 10;
-                equipamentContainer.style.left = (currentLeft + 10) + '%'; // Move o equipamento 10% para a direita
-            });
-
-            // Adiciona log para verificar se a imagem está sendo carregada
-            equipament.onload = function () {
-                console.log('Imagem do equipamento carregada com sucesso.');
-            };
-            equipament.onerror = function () {
-                console.error('Erro ao carregar a imagem do equipamento.');
-            };
-            characterHead.onload = function () {
-                console.log('Imagem da cabeça do personagem carregada com sucesso.');
-            };
-            characterHead.onerror = function () {
-                console.error('Erro ao carregar a imagem da cabeça do personagem.');
-            };
+                    setTimeout(() => {
+                        equipamentContainer.classList.remove("appear");
+                    }, 3000); 
+                }, i * 1000); 
+            }
         } else {
             console.error('Game board element not found');
         }
@@ -354,3 +374,24 @@ function themePage() {
     }
 }
 
+function moveImages() {
+    const imageContainers = document.getElementsByClassName("imageContainer");
+    for (let i = 0; i < imageContainers.length; i++) {
+        const imageContainer = imageContainers[i];
+        const translateX = vetor[i] * 10;
+        imageContainer.style.setProperty('--translate-x', `${translateX}px`);
+        imageContainer.classList.add("move");
+
+        setTimeout(() => {
+            imageContainer.classList.remove("move");
+            imageContainer.style.transform = `translateX(${translateX}px)`;
+        }, 1000);
+    }
+}
+
+// Move imagem
+if (moverButton) {
+    moverButton.addEventListener("click", () => {
+        moveImages();
+    });
+}

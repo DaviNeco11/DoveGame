@@ -41,7 +41,6 @@ body {
 }
 .menu-option:hover {
     background-color: #51eff8;
-    animation: Giro 1.2s forwards; /* Aplica a animação no hover */
 }
 
 .menu-option img {

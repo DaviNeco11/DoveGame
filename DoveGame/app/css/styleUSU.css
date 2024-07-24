@@ -132,3 +132,13 @@
     transform: translateX(-50%);
     z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
 }
+
+.movableImage {
+    position: absolute; 
+    transition: transform 1.0s ease; 
+    
+}
+
+.equipament-container.appear {
+    animation: appear 1.0s ease-in-out;
+}
