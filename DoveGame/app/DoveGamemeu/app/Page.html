@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina inicial</title>
+    <link rel="stylesheet" href="css/stylePage.css" type="text/css">
+</head>
+<body>
+    
+    <div class="container">
+        <h1>ACSoftware </h1>
+        <h1 id="display"></h1>
+        <form>
+            <input type="button" id="startButton" value="START">
+        </form>
+    </div>
+    <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
+    <script src="js/scriptPage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            startProcess();
+            document.getElementById('startButton').addEventListener('click', redirectToMenu);
+        });
+    </script>
+</body>
+</html>

@@ -28,6 +28,7 @@ function startProcess() {
                 };
 
                 ZOHO.CREATOR.API.deleteRecord(config2).then(function (response) {
+                    console.log("Delete form");
                     teste();
                     redirectToMenu();
                 });
@@ -210,14 +211,14 @@ var protag = {};
 var usuario = sessionStorage.getItem('usuario');
 
 // Função para buscar dados do participante
-function fetchParticipantData() {
+//function fetchParticipantData() {
     ZOHO.CREATOR.init()
         .then(function (data) {
             var config = {
                 appName: "DoveGame",
                 reportName: "QuadroParticipante_Report"
             }
-            console.log(nomes, "Texto do casca de bala");
+            console.log(nomes, "Chamado dentro");
             ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
                 var recordArr = response.data;
                 console.log(recordArr);
@@ -244,7 +245,7 @@ function fetchParticipantData() {
                 }
             });
         });
-}
+//}
 
 //--------------Menu de seleção-------------------------------
 function handleOptionClick(optionId) {
@@ -265,10 +266,10 @@ function initPage() {
     // Objeto do usuario
     const protag = new Object();
 }
-//-------------------
+//------------------------------------------------------------------ -
 
 var vetor = [90, 30, 40, 2, 15];
-var nomes = ["Bora bill", "Casca de bala", "Amostradinho", "Cleitom Rasta", "Receba Graças a deus"];
+var nomesFake = ["ReVOLTA", "Esa", "Minerva", "Ranger", "Duds"];
 // Referências aos elementos do DOM
 const imagesContainer = document.getElementById("imagesContainer"); 
 const generateImagesButton = document.getElementById("generateImages"); 
@@ -277,10 +278,8 @@ const infoContainer = document.getElementById("infoContainer");
 
 //----------------THEME Selection-------------------------
 function themePage() {
-    // Log do caminho atual da página
     console.log('Current pathname:', window.location.pathname);
 
-    // Verifica se estamos na página correta
     if (window.location.pathname.endsWith('usupag.html')) {
         console.log('Correct page detected');
 
@@ -334,38 +333,36 @@ function themePage() {
                     themeClass = 'defaultTheme';
             }
 
-            // Define a imagem de fundo do game board
             gameBoard.style.backgroundImage = `url(${backgroundImage})`;
             gameBoard.classList.add(themeClass);
 
             for (let i = 0; i < vetor.length; i++) {
                 setTimeout(() => {
-                    // Adiciona o container do equipamento
                     const equipamentContainer = document.createElement('div');
                     equipamentContainer.id = 'equipament-container';
-                    equipamentContainer.style.position = 'relative'; // Adiciona posicionamento relativo
-                    equipamentContainer.style.left = '10%'; // Define a posição inicial
+                    equipamentContainer.classList.add('equipamentContainer'); // Adiciona a classe aqui
+                    equipamentContainer.style.position = 'relative';
+                    equipamentContainer.style.left = '10%';
                     gameBoard.appendChild(equipamentContainer);
 
-                    // Adiciona a imagem do equipamento
                     const equipament = document.createElement('img');
                     equipament.id = 'equipament';
                     equipament.src = equipamentImage;
-                    equipament.alt = 'Equipamento'; // Adiciona um texto alternativo para acessibilidade
+                    equipament.alt = 'Equipamento';
                     equipamentContainer.appendChild(equipament);
 
-                    // Adiciona a cabeça do personagem sobre o equipamento
                     const characterHead = document.createElement('img');
                     characterHead.id = 'character-head';
                     characterHead.src = characterHeadImage;
-                    characterHead.alt = 'Cabeça do personagem'; // Adiciona um texto alternativo para acessibilidade
+                    characterHead.alt = 'Cabeça do personagem';
                     equipamentContainer.appendChild(characterHead);
 
                     setTimeout(() => {
                         equipamentContainer.classList.remove("appear");
-                    }, 3000); 
-                }, i * 1000); 
+                    }, 3000);
+                }, i * 1000);
             }
+            
         } else {
             console.error('Game board element not found');
         }
@@ -373,21 +370,23 @@ function themePage() {
         console.log('This is not the target page');
     }
 }
+fetchParticipantData();
 
 function moveImages() {
-    const imageContainers = document.getElementsByClassName("imageContainer");
-    for (let i = 0; i < imageContainers.length; i++) {
-        const imageContainer = imageContainers[i];
+    const equipamentContainers = document.getElementsByClassName('equipamentContainer');
+    for (let i = 0; i < equipamentContainers.length; i++) {
+        const equipamentContainer = equipamentContainers[i];
         const translateX = vetor[i] * 10;
-        imageContainer.style.setProperty('--translate-x', `${translateX}px`);
-        imageContainer.classList.add("move");
+        equipamentContainer.style.setProperty('--translate-x', `${translateX}px`);
+        equipamentContainer.classList.add('move');
 
         setTimeout(() => {
-            imageContainer.classList.remove("move");
-            imageContainer.style.transform = `translateX(${translateX}px)`;
+            equipamentContainer.classList.remove('move');
+            equipamentContainer.style.transform = `translateX(${translateX}px)`;
         }, 1000);
     }
 }
+
 
 // Move imagem
 if (moverButton) {

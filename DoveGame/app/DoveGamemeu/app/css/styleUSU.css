@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.game-board {
+    width: 90%;
+    height: 800px;
+    border: 2px solid #333;
+    margin: 0 auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.equipamentContainer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    transition: transform 0.5s ease;
+    animation: moveImage 2s forwards;
+    cursor: pointer;
+}
+
+@keyframes moveUpDown {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(-50%, calc(-50% - 5px));
+    }
+}
+
+#equipament {
+    display: block;
+    width: 100%; /* Faz a imagem do equipamento preencher o contêiner */
+    height: auto; /* Mantém a proporção da altura */
+}
+
+/* Temas específicos */
+.theme1 #equipament-container {
+    position: absolute;
+    top: 10%;
+    margin-left: -5%;
+    transform: translate(-50%, -50%);
+    z-index: 2; 
+    cursor: pointer; 
+    width: 150px; 
+    height: auto; 
+}
+
+.theme1 #character-head {
+    position: absolute;
+    width: 100px; /* Ajuste conforme necessário */
+    bottom: 60px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
+    left: 40%;
+    transform: translateX(-50%);
+    z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
+}
+
+.theme2 #equipament-container {
+    position: absolute;
+    top: 10%;
+    margin-left: -3%;
+    transform: translate(-50%, -50%);
+    z-index: 2; 
+    cursor: pointer; 
+    width: 200px; 
+    height: auto; 
+}
+
+.theme2 #character-head {
+    position: absolute;
+    width: 150px; /* Ajuste conforme necessário */
+    bottom: 6px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
+    left: 62%;
+    transform: translateX(-50%);
+    z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
+}
+
+.theme3 #equipament-container {
+    position: absolute;
+    top: 10%;
+    margin-left: -5%;
+    transform: translate(-50%, -50%);
+    z-index: 2; 
+    cursor: pointer; 
+    width: 150px; 
+    height: auto; 
+}
+
+.theme3 #character-head {
+    position: absolute;
+    width: 100px; /* Ajuste conforme necessário */
+    bottom: 55px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
+    left: 55%;
+    transform: translateX(-50%);
+    z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
+}
+
+.theme4 #equipament-container {
+    position: absolute;
+    top: 10%;
+    margin-left: -5%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Coloca o equipamento acima do fundo */
+    cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
+    width: 200px; /* Define a largura do contêiner do equipamento */
+    height: auto; /* Mantém a proporção da altura */
+}
+
+.theme4 #character-head {
+    position: absolute;
+    width: 170px; /* Ajuste conforme necessário */
+    top: -15px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
+    left: 47%;
+    transform: translateX(-50%) rotate(-15deg);
+    z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
+}
+
+.theme5 #equipament-container {
+    position: absolute;
+    top: 10%;
+    margin-left: -3%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Coloca o equipamento acima do fundo */
+    cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
+    width: 200px; /* Define a largura do contêiner do equipamento */
+    height: auto; /* Mantém a proporção da altura */
+}
+
+.theme5 #character-head {
+    position: absolute;
+    width: 150px; /* Ajuste conforme necessário */
+    bottom: 6px; /* Ajuste conforme necessário para posicionar a cabeça corretamente */
+    left: 53%;
+    transform: translateX(-50%);
+    z-index: 3; /* Coloca a cabeça do personagem acima do equipamento */
+}
+
+.movableImage {
+    position: absolute; 
+    transition: transform 1.0s ease; 
+    
+}
+/*
+.equipament-container.appear {
+    animation: appear 1.0s ease-in-out;
+    transition: transform 1s ease;
+}
+*/
+
+.bottonStyle {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+@keyframes appear {
+    from {
+        transform: translateX(-100vw);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes move {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(var(--translate-x));
+    }
+}
+
+.equipamentContainer.appear {
+    animation: appear 1.0s ease-in-out;
+    transition: transform 1s ease;
+}
+
+.equipamentContainer.move {
+    animation: move 1s ease-in-out forwards;
+}
